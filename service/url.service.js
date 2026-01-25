@@ -22,4 +22,15 @@ const generate = async (data) => {
   return { newUrl, user };
 };
 
-module.exports = { generate };
+
+const redirect = async (data) => {
+    const {shortId} = data.params;
+    const url = await URLs.findOneAndUpdate(
+        {shortId},
+        {$inc:{clicks:1}},
+        {new : true}
+    );
+    return url;
+}
+
+module.exports = { generate , redirect};

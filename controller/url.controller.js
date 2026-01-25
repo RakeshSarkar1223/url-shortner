@@ -19,7 +19,20 @@ const GenerateShortId = async (req, res) => {
 }
 
 
+const RedirectURL = async (req, res) => {
+    try {
+        const url = await urlService.redirect(req);
+        if(!url){
+            throw new Error("Invalid shortID!!");
+        }
+        res.redirect(url.originalUrl);
+    } catch (error) {
+        res.status(400).json({"error":error.message});
+    }
+}
+
 
 module.exports = {
-    GenerateShortId
+    GenerateShortId,
+    RedirectURL
 }
